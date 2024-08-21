@@ -1,11 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFiles, Put } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('/product')
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   @Post()
   create(@Body() createProductDto: CreateProductDto) {
@@ -37,8 +38,9 @@ export class ProductController {
     return await this.productService.findOneAndIncrementViews(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+  @Put(':id')
+  update(@Param('id') id: string, 
+  @Body() updateProductDto: UpdateProductDto) {
     console.log('llego la consulta de edicion');
     console.log('los datos son:', updateProductDto);
 

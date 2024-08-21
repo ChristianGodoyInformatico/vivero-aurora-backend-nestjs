@@ -28,7 +28,6 @@ export class CreateProductDto {
     @IsOptional()
     enabled: boolean;
 
-    @IsArray()
-    @IsMongoId({ each: true })
-    image?: string[];
+    @IsMongoId()
+    image?: string;
 }
