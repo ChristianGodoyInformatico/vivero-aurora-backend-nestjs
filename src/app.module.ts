@@ -17,7 +17,8 @@ import { AuthModule } from './auth/auth.module';
     ImageModule,
     ProductCategoryModule,
     AuthModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/ViveroDB'),
+    // MongooseModule.forRoot('mongodb://localhost:27017/ViveroDB'),
+    MongooseModule.forRoot(process.env.MONGODB_URI),
   ],
 })
 export class AppModule {}

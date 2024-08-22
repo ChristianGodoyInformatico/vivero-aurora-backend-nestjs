@@ -11,7 +11,6 @@ export class CategoryService {
   constructor(@InjectModel(Category.name) private categoryModel: Model<Category>) { }
 
   async create(createCategoryDto: CreateCategoryDto) {
-    console.log('Create Category DTO:', createCategoryDto); // Log de depuración
     const createdCategory = new this.categoryModel(createCategoryDto);
     return createdCategory.save();
   }

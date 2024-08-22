@@ -41,9 +41,6 @@ export class ProductController {
   @Put(':id')
   update(@Param('id') id: string, 
   @Body() updateProductDto: UpdateProductDto) {
-    console.log('llego la consulta de edicion');
-    console.log('los datos son:', updateProductDto);
-
     return this.productService.update(id, updateProductDto);
   }
 
