@@ -1,14 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Model } from 'mongoose';
 import { Category } from 'src/schema/category.schema';
 import { InjectModel } from '@nestjs/mongoose';
+import { ProductCategory } from 'src/schema/product-category.schema';
 
 @Injectable()
 export class CategoryService {
 
-  constructor(@InjectModel(Category.name) private categoryModel: Model<Category>) { }
+  constructor(@InjectModel(Category.name) private categoryModel: Model<Category>,
+  @InjectModel(ProductCategory.name) private productCategoryModel: Model<ProductCategory>) { }
 
   async create(createCategoryDto: CreateCategoryDto) {
     const createdCategory = new this.categoryModel(createCategoryDto);
@@ -28,6 +30,14 @@ export class CategoryService {
   }
 
   async remove(id: string) {
-    return await this.categoryModel.findByIdAndDelete(id);
+    const category = await this.categoryModel.findByIdAndDelete(id).exec();
+
+    if (!category) {
+      throw new NotFoundException('Category not found');
+    }
+
+    await this.productCategoryModel.deleteMany({ category: id }).exec();
+
+    return category;
   }
 }

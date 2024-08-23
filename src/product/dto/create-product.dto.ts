@@ -29,5 +29,11 @@ export class CreateProductDto {
     enabled: boolean;
 
     @IsMongoId()
+    @IsOptional()
     image?: string;
+
+    @IsArray()
+    @IsMongoId({ each: true })
+    @IsOptional()
+    readonly categoryIds?: string[];
 }
