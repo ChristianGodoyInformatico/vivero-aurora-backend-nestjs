@@ -15,7 +15,8 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   app.use(cors({
-    origin: 'http://localhost:5173', // La URL de tu aplicación React
+    // origin: 'http://localhost:5173', // La URL de tu aplicación React
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   }));
